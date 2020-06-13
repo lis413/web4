@@ -10,36 +10,32 @@ import java.util.List;
 
 public class DailyReportDao {
 
+
     private Session session;
 
-    public DailyReportDao(Session session) {
+   public DailyReportDao(Session session) {
+        this.session = session;
+    }
+
+    public DailyReportDao(){}
+
+    public void setSession(Session session) {
         this.session = session;
     }
 
     public List<DailyReport> getAllDailyReport() {
         Transaction transaction = session.beginTransaction();
         List<DailyReport> dailyReports = session.createQuery("FROM DailyReport").list();
-        for (DailyReport d: dailyReports) {
-            System.out.println(d);
-        }
         transaction.commit();
         session.close();
         return dailyReports;
     }
 
     public DailyReport getLastReport(){
-        Transaction transaction = session.beginTransaction();
-        //Query query = session.createQuery("from DailyReport ");
-        List<DailyReport> dailyReports = session.createQuery("FROM DailyReport").list();
-        //query.setMaxResults(1);
-        //DailyReport last = (DailyReport) query.uniqueResult();
-        DailyReport last = dailyReports.get(0);
-        for (DailyReport d: dailyReports) {
-            if (last.getId() < d.getId()){
-                last = d;
-            }
-        }
-        return last;
+        Query query =  session.createQuery("from DailyReport where id = (select max(id) from DailyReport)");
+        DailyReport dailyReport = (DailyReport) query.uniqueResult();
+        session.close();
+        return dailyReport;
     }
 
     public Long addReport(DailyReport dailyReport){
@@ -47,15 +43,34 @@ public class DailyReportDao {
         return (long) session.save(dailyReport);
     }
 
-    public Long deleteAll (){
-        Query query = session.createQuery("DELETE FROM DailyReport");
-        return Long.valueOf(query.executeUpdate());
+    public void changeReport(Long sold, Long earlyEarnings, Long earnings, Long id){
+        if (id != null) {
+            String hql = "update DailyReport set soldCars = :soldCard, earnings = :earnings where id = :id";
+            Query query = session.createQuery(hql);
+            query.setParameter("soldCard", sold + 1);
+            query.setParameter("earnings", earlyEarnings + earnings);
+            query.setParameter("id", id);
+            query.executeUpdate();
+        } else {
+            session.save(new DailyReport(0L,0L));
+        }
 
     }
 
+    public long lastId(){
+        String hql1 = "select max(id) from DailyReport";
+        Query query1 = session.createQuery(hql1);
+        Long id = (Long) query1.uniqueResult();
+        return id;
+    }
 
+    public Long deleteAll (){
+        Query query = session.createQuery("DELETE FROM DailyReport");
+        Long t = (long) query.executeUpdate();
+        return t;
 
-
-
+    }
 
 }
+
+
