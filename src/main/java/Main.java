@@ -25,13 +25,7 @@ public class Main {
         context.addServlet(new ServletHolder(producerServlet), "/producer");
         context.addServlet(new ServletHolder(customerServlet), "/customer");
         context.addServlet(new ServletHolder(newDayServlet), "/newday");
-      //  context.addServlet(new ServletHolder(dailyReportServlet), "/report/last");
-      //  context.addServlet(new ServletHolder(dailyReportServlet), "/report/all");
         context.addServlet(new ServletHolder(dailyReportServlet), "/report/*");
-
-
-
-
 
         Server server = new Server(8080);
         server.setHandler(context);
@@ -39,33 +33,9 @@ public class Main {
         server.start();
         server.join();
 
-//        CarService carService = CarService.getInstance();
-//
 
-//
-//       // System.out.println(carService.getCar("Nissan111", "almera1", "5552").getPrice());
-//
-//
-//        try {
-//            carService.addCar(nissan);
-//            carService.addCar(nissan1);
-//            carService.addCar(nissan2);
-//            System.out.println(carService.getCar("Nissan111", "almera1", "5552").getPrice());
-//
-//            List<Car> car = carService.getAllCar();
-//            for (Car c: car) {
-//                System.out.println(c);
-//            }
-//
-//            System.out.println("удаление - " + carService.deleteCar("Nissan111", "almera1", "5552"));
-//
-//            List<Car> car1 = carService.getAllCar();
-//            for (Car c: car1) {
-//                System.out.println(c);
-//            }
-//        } catch (DBException e) {
-//            e.printStackTrace();
-//        }
+
+
 
     }
 }

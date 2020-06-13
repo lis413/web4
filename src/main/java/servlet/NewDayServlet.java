@@ -15,14 +15,11 @@ public class NewDayServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         DailyReportService dailyReportService = DailyReportService.getInstance();
-        Long soldCars = CarService.getSold();
-        Long earnings = CarService.getEarnings();
-        dailyReportService.addReport(soldCars, earnings);
-        CarService.setEarnings(0L);
-        CarService.setSold(0L);
-        //CarService carService = CarService.getInstance();
-       // carService.deleteAllCar();
+     //   Long soldCars = CarService.getSold();
+     //   Long earnings = CarService.getEarnings();
+        dailyReportService.addReport(0L, 0L);
+    //    CarService.setEarnings(0L);
+    //    CarService.setSold(0L);
 
-        //super.doGet(req, resp);
     }
 }

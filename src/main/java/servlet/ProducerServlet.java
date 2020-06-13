@@ -30,7 +30,5 @@ public class ProducerServlet extends HttpServlet {
         } catch (DBException e) {
             e.printStackTrace();
         }
-
-        //super.doPost(req, resp);
     }
 }

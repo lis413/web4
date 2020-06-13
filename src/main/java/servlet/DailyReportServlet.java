@@ -20,10 +20,9 @@ public class DailyReportServlet extends HttpServlet {
 
         if (req.getPathInfo().contains("all")) {
             json = gson.toJson(DailyReportService.getInstance().getAllDailyReports());
-            System.out.println("____________" + json);
         } else if (req.getPathInfo().contains("last")) {
             json =  gson.toJson(DailyReportService.getInstance().getLastReport());
-            System.out.println("_____________" + json);
+
         }
         PrintWriter out = resp.getWriter();
         resp.setContentType("application/json");
@@ -35,6 +34,5 @@ public class DailyReportServlet extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         DailyReportService.getInstance().deleteAll();
-        //super.doDelete(req, resp);
     }
 }

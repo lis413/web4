@@ -24,29 +24,32 @@ public class CarDao {
     }
 
     public Car getCar(String brand, String model, String licensePlate){
-        //Criteria criteria = session.createCriteria(Car.class);
-
-        String hql = "from Car where brand = '" + brand + "'  and model = '" + model + "' and licensePlate = '" + licensePlate + "'";
-       // String hql = "from Car ";
+        String hql = "from Car where brand = :brandName  and model = :modelName and licensePlate = :licensePlateName";
         Query query = session.createQuery(hql);
-        List<Car> list= query.list();
-        Car car = new Car();
-        for (Car c: list) {
-            car = c;
-        }
+        query.setParameter("brandName", brand);
+        query.setParameter("modelName", model);
+        query.setParameter("licensePlateName", licensePlate);
+        Car car =  (Car)query.uniqueResult();
         return car;
+
+    }
+
+    public void setSession(Session session) {
+        this.session = session;
     }
 
     public List<Car> getAllCar(){
         String hql = "from Car";
         Query query = session.createQuery(hql);
-        List<Car> list = query.list();
-        return list;
+        return (List<Car>) query.list();
     }
 
     public int deleteCar(String brand, String model, String licensePlate){
-        String hql = "delete from Car where brand = '" + brand + "'  and model = '" + model + "' and licensePlate = '" + licensePlate + "'";
+        String hql = "delete from Car where brand = :brandName  and model = :modelName and licensePlate = :licensePlateName";
         Query query = session.createQuery(hql);
+        query.setParameter("brandName", brand);
+        query.setParameter("modelName", model);
+        query.setParameter("licensePlateName", licensePlate);
         return query.executeUpdate();
     }
 
@@ -57,3 +60,5 @@ public class CarDao {
     }
 
 }
+
+
