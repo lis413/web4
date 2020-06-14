@@ -30,7 +30,6 @@ public class CustomerServlet extends HttpServlet {
         String licensePlate = req.getParameter("licensePlate");
         carService.getCar(brand, model, licensePlate);
         carService.deleteCar(brand, model, licensePlate);
-      //  System.out.println(CarService.getSold() + "_________" + CarService.getEarnings());
         resp.setStatus(HttpServletResponse.SC_OK);
 
     }

@@ -69,7 +69,7 @@ public class CarService {
             CarDao dao = new CarDao(session);
             Car car = dao.getCar(brand, model, licensePlate);
             DailyReportService dailyReportService = DailyReportService.getInstance();
-            DailyReport dailyReport = dailyReportService.getLastReport();
+            DailyReport dailyReport = dailyReportService.getReport();
             Long sold = 0L;
             Long earnings = 0L;
             if (dailyReport != null)

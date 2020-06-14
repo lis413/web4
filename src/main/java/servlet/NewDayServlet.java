@@ -15,11 +15,6 @@ public class NewDayServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         DailyReportService dailyReportService = DailyReportService.getInstance();
-     //   Long soldCars = CarService.getSold();
-     //   Long earnings = CarService.getEarnings();
         dailyReportService.addReport(0L, 0L);
-    //    CarService.setEarnings(0L);
-    //    CarService.setSold(0L);
-
     }
 }

@@ -19,9 +19,6 @@ public class DailyReportDao {
 
     public DailyReportDao(){}
 
-    public void setSession(Session session) {
-        this.session = session;
-    }
 
     public List<DailyReport> getAllDailyReport() {
         Transaction transaction = session.beginTransaction();
@@ -32,6 +29,13 @@ public class DailyReportDao {
     }
 
     public DailyReport getLastReport(){
+        Query query =  session.createQuery("from DailyReport where id = (select max(id)-1 from DailyReport)");
+        DailyReport dailyReport = (DailyReport) query.uniqueResult();
+        session.close();
+        return dailyReport;
+    }
+
+    public DailyReport getReport(){
         Query query =  session.createQuery("from DailyReport where id = (select max(id) from DailyReport)");
         DailyReport dailyReport = (DailyReport) query.uniqueResult();
         session.close();
@@ -52,7 +56,7 @@ public class DailyReportDao {
             query.setParameter("id", id);
             query.executeUpdate();
         } else {
-            session.save(new DailyReport(0L,0L));
+            session.save(new DailyReport(earnings,sold+1));
         }
 
     }

@@ -15,7 +15,6 @@ public class DailyReportService {
 
     private static DailyReportService dailyReportService;
     private final SessionFactory sessionFactory;
-    DailyReportDao dailyReportDao = new DailyReportDao();
 
     public DailyReportService(SessionFactory sessionFactory) {
         Configuration configuration = DBCreate.getMySqlConfiguration();
@@ -36,6 +35,11 @@ public class DailyReportService {
 
     public DailyReport getLastReport() {
         DailyReport d = new DailyReportDao(sessionFactory.openSession()).getLastReport();;
+        return d;
+    }
+
+    public DailyReport getReport() {
+        DailyReport d = new DailyReportDao(sessionFactory.openSession()).getReport();;
         return d;
     }
 
